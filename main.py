@@ -16,22 +16,6 @@ nlp = spacy.load("en_core_web_sm")
 
 
 def preprocess_text(text):
-    """
-    Preprocess the input text by performing the following steps:
-    1. Convert to lowercase
-    2. Remove punctuation
-    3. Tokenize the text
-    4. Remove stop words
-    5. Apply stemming and lemmatization
-    6. Remove numbers
-    7. Perform POS tagging and NER using SpaCy
-
-    Args:
-    text (str): Input text to preprocess.
-
-    Returns:
-    dict: Dictionary containing cleaned text, tokens, POS tags, and named entities.
-    """
     # Step 1: Convert to lowercase
     text = text.lower()
 
@@ -70,30 +54,22 @@ def preprocess_text(text):
 
 
 def load_and_preprocess_data(file_path):
-    # Load dataset
     df = pd.read_csv(file_path)
 
-    # Apply preprocessing to each sentence in the dataset
     df['preprocessed'] = df['sentence'].apply(preprocess_text)
 
     return df
 
 
 def main():
-    # Define the path to the input CSV file
     input_file_path = 'data/sentiment140.csv'
 
-    # Load and preprocess data
     data = load_and_preprocess_data(input_file_path)
 
-    # Define the path to the output CSV file
     output_file_path = 'data/preprocessed_sentiment_data.csv'
 
-    # Save preprocessed data to a new CSV file
     data.to_csv(output_file_path, index=False)
     print(f"Preprocessing completed and saved to {output_file_path}")
 
-
-# Entry point for script execution
 if __name__ == "__main__":
     main()
